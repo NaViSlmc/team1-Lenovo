@@ -16,7 +16,6 @@ import MyMajor from "@/components/Teachers/MyMajor.vue" //引入教师端我教�
 import MyExam from "@/components/Teachers/MyExam.vue"   //引入教师端的考试管理页面
 import TPersonal from "@/components/Teachers/TPersonal.vue"   //引入教师端的个人中心页面
 
-import myPersonal from "@/components/common/myPersonal.vue"   //引入个人资料与修改密码页面
 
 import Stu from "@/components/Teachers/Stu.vue"   //引入学生管理页面
 import SetCourse from "@/components/Teachers/SetCourse.vue"   //引入课程管理页面
@@ -58,11 +57,6 @@ const routes = [
                 path: "TPersonal",
                 component: TPersonal,
                 name: "TPersonal"
-            },
-            {
-                path: "myPersonal",
-                component: myPersonal,
-                name: "myPersonal"
             },
             {
                 path: "Stu",
@@ -114,11 +108,6 @@ const routes = [
                 path: "StuPersonal",
                 component: StuPersonal,
                 name: "StuPersonal"
-            },
-            {
-                path: "myPersonal",
-                component: myPersonal,
-                name: "myPersonal"
             }
         ]
     }

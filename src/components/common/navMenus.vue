@@ -69,7 +69,7 @@ export default {
       };
     },
     Personal () {
-      this.$router.push("/teacher/Personal");
+      this.$router.push("/teacher/TPersonal");
     }
   }
 };
