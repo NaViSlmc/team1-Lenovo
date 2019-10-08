@@ -22,7 +22,23 @@
           </tr>
         </table>
       </el-tab-pane>
-      <el-tab-pane label="修改密码" name="second"></el-tab-pane>
+      <el-tab-pane label="修改密码" name="second">
+        <h1>修改密码</h1>
+        <el-form ref="form" :model="formLabelAlign" label-width="380px">
+          <el-form-item label="原始密码">
+            <el-input v-model="formLabelAlign.name" type="password"></el-input>
+          </el-form-item>
+          <el-form-item label="新密码">
+            <el-input v-model="formLabelAlign.type" type="password"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码">
+            <el-input v-model="formLabelAlign.type" type="password"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button  @click="re">修改</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -35,19 +51,51 @@ export default {
     return {
       activeName: "second",
       userId: "",
-      obj: {}
+      obj: {},
+      id: "",
+      password: "",
+      newPassword: "",
+      formLabelAlign: {
+        name: "",
+        type: ""
+      }
     };
   },
   methods: {
     //当前组件用到的数据
     handleClick(tab) {
-      var app = this;
-      this.$http.post("/permit/user/detail/" + app.userId).then(function(res) {
-        // console.log(app.userId)
-        // console.log(res.data);
-        app.obj = res.data;
-        console.log(app.obj);
-      });
+      console.log(tab.index);
+      if (tab.index == "0") {
+        var app = this;
+        this.$http
+          .post("/permit/user/detail/" + app.userId)
+          .then(function(res) {
+            // console.log(app.userId)
+            // console.log(res.data);
+            app.obj = res.data;
+            console.log(app.obj);
+          });
+      } else {
+        var app = this;
+        this.$http
+          .post("/permit/user/modifyPassword", {
+            id: app.id, //用户的id，在localstorage中有
+            password: app.formLabelAlign.name, //用户的旧密码
+            newPassword: app.formLabelAlign.type //用户的新密码
+          })
+          .then(function(res) {
+            console.log(res);
+          });
+      }
+    },
+    re() {
+      this.$http.post("/permit/user/modifyPassword", {
+          id: this.userId, //用户的id，在localstorage中有
+          password: this.formLabelAlign.name, //用户的旧密码
+          newPassword: this.formLabelAlign.type //用户的新密码
+        }).then(function(res) {
+          console.log(res.data)
+        });
     }
   },
   created() {
@@ -55,14 +103,14 @@ export default {
 
     // console.log(window.localStorage.getItem("userId"));
     this.userId = window.localStorage.getItem("userId");
-    console.log(this.userId);
+    // console.log(this.userId);
   }
 };
 </script>
 
 <style lang="">
-  tr td{
-    border: 1px solid #ccc;
-    padding: 20px;
-  }
+tr td {
+  border: 1px solid #ccc;
+  padding: 20px;
+}
 </style>

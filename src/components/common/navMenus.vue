@@ -33,7 +33,7 @@
             <li>
               <span style="cursor:pointer;color:#A3A3A4; font-size:14px" @click="Personal">讲师</span>
               <span class="ask_title">在线解答</span>
-              <span style="cursor:pointer;color:#A3A3A4; font-size:14px;margin-left:15px">退出</span>
+              <span style="cursor:pointer;color:#A3A3A4; font-size:14px;margin-left:15px" @click="quit">退出</span>
             </li>
           </ul>
         </div>
@@ -70,6 +70,14 @@ export default {
     },
     Personal () {
       this.$router.push("/teacher/TPersonal");
+    },
+    quit () {
+      var app = this;
+      app.$http.get("/permit/logout").then(function (res) {
+        // console.log(res)
+        app.$router.push("/Logined");
+        localStorage.clear();
+      })
     }
   }
 };

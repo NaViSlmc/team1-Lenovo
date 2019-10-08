@@ -32,7 +32,7 @@
             <li>
               <span style="cursor:pointer;color:#A3A3A4; font-size:14px" @click="StuPersonal">student1</span>
               <span class="ask_title">在线提问</span>
-              <span style="cursor:pointer;color:#A3A3A4; font-size:14px;margin-left:15px">退出</span>
+              <span style="cursor:pointer;color:#A3A3A4; font-size:14px;margin-left:15px" @click="quit">退出</span>
             </li>
           </ul>
         </div>
@@ -70,6 +70,14 @@ export default {
     },
     StuPersonal () {
       this.$router.push("/student/StuPersonal");
+    },
+    quit() {
+      var app = this;
+      this.$http.get("/permit/logout").then(function (res) {
+        // console.log(res.data)
+        app.$router.push("/Logined");
+        localStorage.clear();
+      })
     }
   }
 };

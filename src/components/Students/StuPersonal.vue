@@ -22,7 +22,23 @@
           </tr>
         </table>
       </el-tab-pane>
-      <el-tab-pane label="修改密码" name="second"></el-tab-pane>
+      <el-tab-pane label="修改密码" name="second">
+        <h1>修改密码</h1>
+        <el-form ref="form" :model="formLabelAlign" label-width="380px">
+          <el-form-item label="原始密码">
+            <el-input v-model="formLabelAlign.name" type="password"></el-input>
+          </el-form-item>
+          <el-form-item label="新密码">
+            <el-input v-model="formLabelAlign.type" type="password"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码">
+            <el-input v-model="formLabelAlign.type" type="password"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button  @click="re">修改</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -35,7 +51,11 @@ export default {
     return {
       activeName: "first",
       userId: "",
-      obj:{}
+      obj:{},
+      formLabelAlign: {
+        name: "",
+        type: ""
+      }
     };
   },
   methods: {
@@ -46,6 +66,15 @@ export default {
         console.log(res.data);
         app.obj = res.data;
       })
+    },
+    re() {
+      this.$http.post("/permit/user/modifyPassword", {
+          id: this.userId, //用户的id，在localstorage中有
+          password: this.formLabelAlign.name, //用户的旧密码
+          newPassword: this.formLabelAlign.type //用户的新密码
+        }).then(function(res) {
+          console.log(res.data)
+        });
     }
   },
   created() {
