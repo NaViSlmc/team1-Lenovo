@@ -1,17 +1,18 @@
 <template>
   <div id="app">
-    <!-- 展示区域 -->
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+
+
 export default {
-  name: "App",
+  name: 'App',
   components: {
 
   }
-};
+}
 </script>
 
 <style>
@@ -107,66 +108,68 @@ ul {
 }
 .shortDesc .readP p {
   width: auto;
-  text-indent:2em;
-  margin-top:10px;
+  text-indent: 2em;
+  margin-top: 10px;
 }
 
-
-#myNews .el-badge__content{
-  left: -15px ;
-  top: 5px ;
+#myNews .el-badge__content {
+  left: -15px;
+  top: 5px;
 }
 
-#onStulineAsk .el-badge__content, #onlineAnswer .el-badge__content{
-  background: #409EFF;
+#onStulineAsk .el-badge__content,
+#onlineAnswer .el-badge__content {
+  background: #409eff;
 }
 
-#masterSetting .el-dialog__header,  .el-dialog__header{
+#masterSetting .el-dialog__header,
+.el-dialog__header {
   border-bottom: 1px solid #f2f2f2;
 }
-#masterSetting .el-dialog__footer{
+#masterSetting .el-dialog__footer {
   border: 1px solid #f2f2f2;
 }
 
 #masterSetting .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  #masterSetting .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
- #masterSetting .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 140px;
-    height: 140px;
-    line-height: 140px;
-    text-align: center;
-  }
- #masterSetting .avatar {
-    width: 140px;
-    height: 140px;
-    display: block;
-  }
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+#masterSetting .avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+#masterSetting .avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 140px;
+  height: 140px;
+  line-height: 140px;
+  text-align: center;
+}
+#masterSetting .avatar {
+  width: 140px;
+  height: 140px;
+  display: block;
+}
 
-  #myGrowup .el-table td ,#myGrowup .el-table th{
-    padding: 0;
+#myGrowup .el-table td,
+#myGrowup .el-table th {
+  padding: 0;
 }
- #myGrowup .el-card__body{
-    padding: 0 20px;
+#myGrowup .el-card__body {
+  padding: 0 20px;
 }
-#myGrowup .el-timeline-item__timestamp{
-  font-size: 16px ;
+#myGrowup .el-timeline-item__timestamp {
+  font-size: 16px;
   font-weight: 700;
 }
-#myGrowup .el-timeline-item__timestamp.is-top{
+#myGrowup .el-timeline-item__timestamp.is-top {
   padding-top: 2px;
 }
 
-#students .el-dialog__header{
+#students .el-dialog__header {
   border: 1px solid #f2f2f2;
 }
 </style>

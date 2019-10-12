@@ -3,10 +3,11 @@
     <!-- 头部 -->
     <div class="header">
       <div class="header-1">
-        <div class="header-2">
+        <div class="header-2" style="margin-left:30px">
           <p>考试管理</p>
           <span>贴合知识点 自动判卷 多维度统计</span>
         </div>
+        <img src="../../images/01.png" alt class="img1" />
       </div>
     </div>
     <!-- 中间 -->
@@ -14,10 +15,10 @@
     <!-- 按钮 -->
     <div class="main" style="top:5px">
       <el-row style="top:10px;left:5px;">
-        <el-button type="success">发布考试</el-button>
-        <el-button type="success">考试管理</el-button>
+        <el-button type="success" @click="routerPush('CreateExam')">发布考试</el-button>
+        <el-button type="primary" @click="routerPush('CreateExamPaper')">创建试卷</el-button>
       </el-row>
-      <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top:20px;">
+      <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top:20px;" type="border-card">
         <el-tab-pane label="大前端" name="first">
           <el-tag type="success" style="margin-bottom:10px;margin-left:5px;">大前端</el-tag>
 
@@ -53,6 +54,7 @@
               </template>
             </el-table-column>
           </el-table>
+          <el-pagination hide-on-single-page :key="1" :current-page="+page1" @current-change="currentChange" background layout="prev, pager, next" :page-size="+pageSize" :total="recordsTotal" style='margin-top:10px;'></el-pagination>
         </el-tab-pane>
 
         <el-tab-pane label="移动互联" name="second">
@@ -90,6 +92,7 @@
               </template>
             </el-table-column>
           </el-table>
+          <el-pagination hide-on-single-page :key="2" :current-page="+page2" @current-change="currentChange" background layout="prev, pager, next" :page-size="+pageSize" :total="recordsTotal" style='margin-top:10px;'></el-pagination>
         </el-tab-pane>
 
         <el-tab-pane label="软件开发" name="third">
@@ -110,7 +113,7 @@
 
             <el-table-column label="备注" width="250">
               <template slot-scope="scope">
-                <span style="margin-left: 10px">{{ scope.row.remark }}</span>
+                <span>{{ scope.row.remark }}</span>
               </template>
             </el-table-column>
 
@@ -127,45 +130,59 @@
               </template>
             </el-table-column>
           </el-table>
+          <el-pagination hide-on-single-page :key="3" :current-page="+page3" @current-change="currentChange" background layout="prev, pager, next" :page-size="+pageSize" :total="recordsTotal" style='margin-top:10px;'></el-pagination>
         </el-tab-pane>
       </el-tabs>
-      <el-pagination @current-change="currentChange" background layout="prev, pager, next" :page-size="+pageSize" :total="recordsTotal" style='margin-top:10px;'></el-pagination>
+      
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: "MyExam",
+  name: "MyExamination",
   data () {
     return {
       activeName: "first",
       typeId: "1",
-      page: "1",
+      page1: "1",
+      page2: "1",
+      page3: "1",
       pageSize: "4",
       data1: null,
       data2: null,
       data3: null,
-      recordsTotal: 0
+      recordsTotal: 0, // 总条目数
+      index: 1
     };
   },
   methods: {
+    // 按钮路由跳转功能
+    routerPush(route){
+      this.$router.push(route);
+    },
     // 切换页码功能
     currentChange (val) {
+      // console.log(val)
       var app = this;
+      this[`page${app.index}`] = val;
       this.$http.post('/exam/examPage/page', {
         pageSize: this.pageSize,
-        page: val
+        page: val,
+        params: {
+          typeId: this.index
+        }
       }).then(function (res) {
-        app.data1 = res.data.data;
+        app[`data${app.index}`] = res.data.data;
       })
     },
     handleClick (tab, event, row, index) {
       var index = Number(tab.index) + 1;
+      this.index = index;
       if (index == 1) {
         var app = this;
         this.$http
           .post("/exam/examPage/page", {
-            page: this.page, //当前第几页
+            page: this.page1, //当前第几页
             pageSize: this.pageSize, //每页显示的条数
             params: {
               typeId: index //试卷类型 typeId  1为大前端  2是移动互联 3是软件开发
@@ -179,7 +196,7 @@ export default {
         var app = this;
         this.$http
           .post("/exam/examPage/page", {
-            page: this.page, //当前第几页
+            page: this.page2, //当前第几页
             pageSize: this.pageSize, //每页显示的条数
             params: {
               typeId: index //试卷类型 typeId  1为大前端  2是移动互联 3是软件开发
@@ -193,7 +210,7 @@ export default {
         var app = this;
         this.$http
           .post("/exam/examPage/page", {
-            page: this.page, //当前第几页
+            page: this.page3, //当前第几页
             pageSize: this.pageSize, //每页显示的条数
             params: {
               typeId: index //试卷类型 typeId  1为大前端  2是移动互联 3是软件开发
@@ -211,7 +228,7 @@ export default {
     var app = this;
     this.$http
       .post("/exam/examPage/page", {
-        page: this.page, //当前第几页
+        page: this.page1, //当前第几页
         pageSize: this.pageSize, //每页显示的条数
         params: {
           typeId: this.typeId //试卷类型 typeId  1为大前端  2是移动互联 3是软件开发
@@ -224,7 +241,10 @@ export default {
   }
 };
 </script>
-<style lang="">
+<style>
+.el-table td, .el-table th.is-leaf {
+  text-align: center;
+}
 .header {
   width: 100%;
   height: 144px;

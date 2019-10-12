@@ -1,38 +1,41 @@
 <template>
-  <div id="shome">
-    <!-- Student's Main page,arrive to here when student log in success. -->
-
+  <div id="thome">
     <el-container>
+
+      <!--头部-->
       <el-header>
-        <!-- 头部内容 -->
-        <nav-Student-menus></nav-Student-menus>
+        <nav-studentMenus></nav-studentMenus>
       </el-header>
 
+      <!--中间部分-->
       <el-main>
-        <!-- 切换内容 -->
+        <router-view />
       </el-main>
-          <router-view></router-view>
+
+      <!-- 尾部-->
       <el-footer>
-        <!-- 尾部内容 -->
-        <copy-right></copy-right>
+        <copyRight></copyRight>
       </el-footer>
     </el-container>
   </div>
 </template>
 
 <script>
-import navStudentMenus from "../common/navStudentMenus.vue";
-import copyRight from "../common/copyRight.vue";
+import navStudentMenus from "../common/navStudentMenus";
+import copyRight from "../common/copyRight";
+
 export default {
-  name: "Shome",
-  data() {
-    return {};
+  name: "shome",
+  data () {
+    return {
+      
+    }
   },
   components: {
-    navStudentMenus, //在当前组件注册此组件，只有注册之后才能使用
+    navStudentMenus,
     copyRight
   }
-};
+}
 </script>
 
 <style lang="">
@@ -56,7 +59,7 @@ a {
   padding-left: 10px !important;
 }
 
-#shome ul.el-menu-demo > li {
+#thome ul.el-menu-demo > li {
   height: 45px !important;
   line-height: 45px !important;
 }
@@ -78,7 +81,7 @@ a {
   padding: 0;
   color: #333;
   /*text-align: center;
-		line-height: 160px;*/
+      line-height: 160px;*/
 }
 
 body > .el-container {

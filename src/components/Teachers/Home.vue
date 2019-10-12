@@ -1,41 +1,35 @@
 <template>
   <div id="thome">
-    <!-- Teacher's Main page,arrive to here when teacher log in success. -->
-
     <el-container>
       <el-header>
-        <!-- 头部内容 -->
         <nav-menus></nav-menus>
       </el-header>
-
       <el-main>
-        <!-- 切换内容 -->
-      </el-main>
         <router-view></router-view>
+      </el-main>
       <el-footer>
-        <!-- 尾部内容 -->
         <copy-right></copy-right>
       </el-footer>
     </el-container>
   </div>
 </template>
-
 <script>
-import navMenus from "../common/navMenus.vue";
-import copyRight from "../common/copyRight.vue";
+import navMenus from '../common/navMenus.vue'
+import copyRight from '../common/copyRight.vue'
 export default {
-  name: "Thome",
-  data() {
-    return {};
+  name: 'thome',
+  data () {
+    return {
+
+    }
   },
   components: {
-    navMenus, //在当前组件注册此组件，只有注册之后才能使用
+    navMenus,
     copyRight
   }
-};
+}
 </script>
-
-<style lang="">
+<style>
 a {
   text-decoration: none;
 }

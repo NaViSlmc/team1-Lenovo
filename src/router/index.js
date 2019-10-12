@@ -1,120 +1,136 @@
-import Vue from "vue"
-import VueRouter from "vue-router"  //引入vue-router
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-import Logined from "@/components/common/Login.vue"
-import Shome from "@/components/Students/Home.vue"  //引入学生端的主页面
-import Major from "@/components/Students/Major.vue" //引入学生端我的专业页面
-import Class from "@/components/Students/Class.vue" //引入学生端我的课程页面
-import GrowUp from "@/components/Students/GrowUp.vue" //引入学生端我的成长页面
-import Join from "@/components/Students/Join.vue" //引入学生端我的参与页面
-import Exam from "@/components/Students/Exam.vue" //引入学生端我的参与页面
-import StuPersonal from "@/components/Students/StuPersonal.vue"   //引入学生端的个人中心页面
+import Logined from '../components/common/Login.vue'
 
+// ---------------------教师端----------------------
+import Thome from '../components/Teachers/Home.vue'
+import MyMajor from '../components/Teachers/MyMajor.vue' // 我教的专业
+import MyTeachCourses from '../components/Teachers/MyTeachCourses.vue' // 我教的课程
+import MyExamination from '../components/Teachers/MyExamination.vue' // 考试管理
+import MyStudents from '../components/Teachers/MyStudents.vue' // 学员管理
+import MyCourse from '../components/Teachers/MyCourse.vue' // 课程管理
+import MyContribution from '../components/Teachers/MyContribution.vue' // 我的贡献
+import MyData from '../components/Teachers/MyData.vue' // 个人资料
+import CreateExamPaper from '../components/Teachers/CreateExamPaper.vue' // 创建试卷
+import CreateExam from '../components/Teachers/CreateExam.vue' // 创建考试
 
-import Thome from "@/components/Teachers/Home.vue"  //引入教师端的主页面
-import MyMajor from "@/components/Teachers/MyMajor.vue" //引入教师端我教的专业页面
-import MyExam from "@/components/Teachers/MyExam.vue"   //引入教师端的考试管理页面
-import TPersonal from "@/components/Teachers/TPersonal.vue"   //引入教师端的个人中心页面
-
-
-import Stu from "@/components/Teachers/Stu.vue"   //引入学生管理页面
-import SetCourse from "@/components/Teachers/SetCourse.vue"   //引入课程管理页面
-import MyCon from "@/components/Teachers/MyCon.vue"   //引入我的贡献页面
-
-
-Vue.use(VueRouter)  //在vue对象中使用vue-router
-
-// 1.router：一般指的是路由实例。如：路由编程式导航的$router.push()
-
-// 2.routes：指创建vue-router路由实例的配置项。用来配置多个route路由对象
-
-// 3.route：指路由对象。如：this.$route指的就是当前路由对象
+// ---------------------学生端----------------------
+import Shome from '../components/Students/Home.vue'
+import MyMajorStudent from '../components/Students/MyMajorStudent.vue' //我的专业
+import MyGrow from '../components/Students/MyGrow.vue'  // 我的成长
+import MyJoin from '../components/Students/MyJoin.vue'// 我的参加
+import MyExam from '../components/Students/MyExam.vue'// 我的考试
+import MyDataStudent from '../components/Students/MyDataStudent.vue'// 个人资料
+import MyClass from '../components/Students/MyClass.vue'// 个人资料
+Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: "/",
-        redirect: "/logined"  //路由重定向：访问根目录时，重定向到logined目录
-    },
-    {
-        path: "/logined",
-        component: Logined
-    },
-    {
-        path: "/teacher",   //教师端的路由配置
-        component: Thome,
-        children: [
-            {
-                path: "MyMajor",
-                component: MyMajor,
-                name: "MyMajor"
-            },
-            {
-                path: "MyExam",
-                component: MyExam,
-                name: "MyExam"
-            },
-            {
-                path: "TPersonal",
-                component: TPersonal,
-                name: "TPersonal"
-            },
-            {
-                path: "Stu",
-                component: Stu,
-                name: "Stu"
-            },
-            {
-                path: "SetCourse",
-                component: SetCourse,
-                name: "SetCourse"
-            },
-            {
-                path: "MyCon",
-                component: MyCon,
-                name: "MyCon"
-            }
-        ]
-    },
-    {
-        path: "/student",   //学生端的路由配置
-        component: Shome,
-        children: [
-            {
-                path: "Major",
-                component: Major,
-                name: "Major"
-            },
-            {
-                path: "Class",
-                component: Class,
-                name: "Class"
-            },
-            {
-                path: "GrowUp",
-                component: GrowUp,
-                name: "GrowUp"
-            },
-            {
-                path: "Join",
-                component: Join,
-                name: "Join"
-            },
-            {
-                path: "Exam",
-                component: Exam,
-                name: "Exam"
-            },
-            {
-                path: "StuPersonal",
-                component: StuPersonal,
-                name: "StuPersonal"
-            }
-        ]
-    }
-]
+  {
+    path: '/',
+    redirect: '/logined'
+  },
+  {
+    path: '/logined',
+    component: Logined
+  },
+  {
+    path: '/teacher', // 教师端主页面
+    component: Thome,
+    children: [
+      {
+        path: 'MyMajor', // 我教的专业
+        component: MyMajor,
+        name: 'MyMajor',
+      },
+      {
+        path: 'MyTeachCourses', // 我教的课程页面
+        component: MyTeachCourses,
+        name: 'MyTeachCourses',
+      },
+      {
+        path: 'MyExamination', // 考试管理
+        component: MyExamination,
+        name: 'MyExamination',
+      },
+      {
+        path: 'MyStudents', // 学员管理
+        component: MyStudents,
+        name: 'MyStudents',
+      },
+      {
+        path: 'MyCourse', // 课程管理
+        component: MyCourse,
+        name: 'MyCourse',
+      },
+      {
+        path: 'MyContribution', // 我的贡献
+        component: MyContribution,
+        name: 'MyContribution',
+      },
+      {
+        path: 'MyData', // 个人资料
+        component: MyData,
+        name: 'MyData',
+      },
+      {
+        path: 'CreateExamPaper', // 创建试卷
+        component: CreateExamPaper,
+        name: 'CreateExamPaper',
+      },
+      {
+        path: 'CreateExam', // 创建考试
+        component: CreateExam,
+        name: 'CreateExam',
+      },
+    ]
+  },
+  {
+    path: '/student', // 学生端主页面
+    component: Shome,
+    children:[
+      {
+        // 我的专业
+        path: 'MyMajorStudent', //匹配路径
+        component: MyMajorStudent,//组件
+        name: 'MyMajorStudent',//名字
+      },
+      {
+        // 我的课程
+        path: 'MyClass', //匹配路径
+        component: MyClass,//组件
+        name: 'MyClass',//名字
+      },
+      {
+        // 我的成长
+        path: 'MyGrow', 
+        component: MyGrow,
+        name: 'MyGrow',
+      },
+      {
+        // 我的参加
+        path: 'MyJoin', 
+        component: MyJoin,
+        name: 'MyJoin',
+      },
+      {
+        // 我的考试
+        path: 'MyExam', 
+        component: MyExam,
+        name: 'MyExam',
+      },
+      {
+        // 个人资料
+        path: 'MyDataStudent', 
+        component: MyDataStudent,
+        name: 'MyDataStudent',
+      }
+    ]
+  }
+];
 
-const router = new VueRouter({  //将routes注册到router中
-    routes
-})
+const router = new VueRouter({
+  routes
+});
 
 export default router;

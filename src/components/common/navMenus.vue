@@ -3,27 +3,22 @@
     <el-row :gutter="20">
       <el-col :span="4">
         <div class="grid-content bg-purple">
-          <img src="../../images/lenovo.png" alt />
+          <img src="../../images/lenovo.png" alt="">
         </div>
       </el-col>
       <el-col :span="14">
         <div class="grid-content bg-purple">
-          <el-menu
-            :default-active="activeIndex"
-            class="el-menu-demo"
-            mode="horizontal"
-            @select="handleSelect"
-          >
-            <el-menu-item index="1">我教的专业</el-menu-item>
-            <el-submenu index="2">
+          <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+            <el-menu-item index="MyMajor">我教的专业</el-menu-item>
+            <el-submenu index="MyTeachCourses">
               <template slot="title">我教的课程</template>
-              <el-menu-item index="2-1">选项1</el-menu-item>
-              <el-menu-item index="2-2">选项2</el-menu-item>
+              <el-menu-item index="MyTeachCourses">课程1</el-menu-item>
+              <el-menu-item index="MyTeachCourses">课程2</el-menu-item>
             </el-submenu>
-            <el-menu-item index="3">考试管理</el-menu-item>
-            <el-menu-item index="4">学员管理</el-menu-item>
-            <el-menu-item index="5">课程管理</el-menu-item>
-            <el-menu-item index="6">我的贡献</el-menu-item>
+            <el-menu-item index="MyExamination">考试管理</el-menu-item>
+            <el-menu-item index="MyStudents">学员管理</el-menu-item>
+            <el-menu-item index="MyCourse">课程管理</el-menu-item>
+            <el-menu-item index="MyContribution">我的贡献</el-menu-item>
           </el-menu>
         </div>
       </el-col>
@@ -31,9 +26,13 @@
         <div class="grid-content bg-purple">
           <ul class="loginUser">
             <li>
-              <span style="cursor:pointer;color:#A3A3A4; font-size:14px" @click="Personal">讲师</span>
-              <span class="ask_title">在线解答</span>
-              <span style="cursor:pointer;color:#A3A3A4; font-size:14px;margin-left:15px" @click="quit">退出</span>
+              <span style="cursor:pointer;color:#A3A3A4;font-size:14px" @click="toggUserData">
+                {{ userName }}
+              </span>
+              <span class="ask_title">
+                在线解答
+              </span>
+              <span style="cursor:pointer;color:#A3A3A4;font-size:14px;margin-left:15px" @click="userOut">退出</span>
             </li>
           </ul>
         </div>
@@ -43,47 +42,65 @@
 </template>
 <script>
 export default {
-  name: "navMenus",
-  data() {
+  name: 'navMenus',
+  data () {
     return {
-      activeIndex: "1"
-    };
+      activeIndex: 'MyMajor',// 当前选择导航栏
+      userName: '' // 用户名
+    }
   },
   methods: {
-    handleSelect(key) {
-      switch (key) {
-        case "1":
-          this.$router.push("/teacher/MyMajor");
-          break;
-        case "3":
-          this.$router.push("/teacher/MyExam");
-          break;
-        case "4":
-          this.$router.push("/teacher/Stu");
-          break;
-        case "5":
-          this.$router.push("/teacher/SetCourse");
-          break;
-        case "6":
-          this.$router.push("/teacher/MyCon")
-      };
+    // 用户详情页跳转
+    toggUserData () {
+      if ('/teacher/MyData' !== this.$router.history.current.fullPath) {
+        this.activeIndex = '';
+        this.$router.push('/teacher/MyData');
+      }
     },
-    Personal () {
-      this.$router.push("/teacher/TPersonal");
+    // 导航栏切换
+    handleSelect (key) {
+      this.activeIndex = key;
+      // 当前要跳转的path不能等于当前path，否则会路由报错
+      if (`/teacher/${key}` !== this.$router.history.current.fullPath) {
+        this.$router.push(`/teacher/${key}`);
+      }
     },
-    quit () {
-      var app = this;
-      app.$http.get("/permit/logout").then(function (res) {
-        // console.log(res)
-        app.$router.push("/Logined");
-        localStorage.clear();
-      })
+    // 用户退出
+    userOut () {
+      try {
+        this.$http.get('/permit/logout').then((response) => {
+          if (response.data === '') {
+            this.$message({
+              message: `${this.userName} 退出成功`,
+              type: 'success'
+            });
+            // 清空localStorage
+            window.localStorage.removeItem('userId');
+            window.localStorage.removeItem('userName');
+            this.$router.push('/');
+          } else if (response.data.code === 403) {
+            this.$message({
+              message: '超时未操作,请重新登录',
+              type: 'warning'
+            });
+            window.localStorage.removeItem('userId');
+            window.localStorage.removeItem('userName');
+            this.$router.push('/');
+          } else {
+            this.$message.error('退出失败')
+          }
+        })
+      } catch (err) {
+        this.$message.error('请检查您的网络')
+      }
     }
+  },
+  created () {
+    this.userName = window.localStorage.getItem('userName'); // 从本地仓库拿到用户名
   }
-};
+}
 </script>
-
-<style lang="">
+<style>
 a {
   color: #6c6868;
   font-size: 12px;

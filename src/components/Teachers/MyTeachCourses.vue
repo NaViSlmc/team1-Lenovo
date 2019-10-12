@@ -1,11 +1,11 @@
 <template>
   <div>
-    教师端我教的专业
+    教师端我教的课程
   </div>
 </template>
 <script>
 export default {
-  name: 'MyMajor',
+  name: 'MyTeachCourses',
   data(){
     return {
 

@@ -22,46 +22,19 @@
           <div id="h-form" for="user">
             <div class="h-user">
               <span class="h-colour">
-                <svg
-                  class="icon"
-                  width="20px"
-                  height="20.00px"
-                  viewBox="0 0 1024 1024"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill="#333333"
-                    d="M592.896 589.141333c96.938667-34.816 166.570667-131.072 166.570667-244.053333 0-142.677333-110.933333-258.048-247.466667-258.048-136.533333 0-247.466667 115.712-247.466667 258.048 0 112.981333 69.632 208.896 166.570667 244.053333-162.816 40.96-284.672 202.069333-284.672 383.658667L877.226667 972.8C877.226667 791.210667 755.712 630.101333 592.896 589.141333L592.896 589.141333zM592.896 589.141333"
-                  ></path>
+                <svg class="icon" width="20px" height="20.00px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="#333333" d="M592.896 589.141333c96.938667-34.816 166.570667-131.072 166.570667-244.053333 0-142.677333-110.933333-258.048-247.466667-258.048-136.533333 0-247.466667 115.712-247.466667 258.048 0 112.981333 69.632 208.896 166.570667 244.053333-162.816 40.96-284.672 202.069333-284.672 383.658667L877.226667 972.8C877.226667 791.210667 755.712 630.101333 592.896 589.141333L592.896 589.141333zM592.896 589.141333"></path>
                 </svg>
               </span>
-              <input type="text"  for="loginname" id="loginname" autocomplete="off" placeholder="邮箱" v-model="loginName">
+              <input type="text" for="loginname" id="loginname" autocomplete="off" placeholder="邮箱" v-model="uname">
             </div>
             <div class="h-user2">
               <span class="h-colour">
-                <svg
-                  class="icon"
-                  width="20px"
-                  height="20.00px"
-                  viewBox="0 0 1024 1024"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill="#333333"
-                    d="M592.896 589.141333c96.938667-34.816 166.570667-131.072 166.570667-244.053333 0-142.677333-110.933333-258.048-247.466667-258.048-136.533333 0-247.466667 115.712-247.466667 258.048 0 112.981333 69.632 208.896 166.570667 244.053333-162.816 40.96-284.672 202.069333-284.672 383.658667L877.226667 972.8C877.226667 791.210667 755.712 630.101333 592.896 589.141333L592.896 589.141333zM592.896 589.141333"
-                  ></path>
+                <svg class="icon" width="20px" height="20.00px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="#333333" d="M592.896 589.141333c96.938667-34.816 166.570667-131.072 166.570667-244.053333 0-142.677333-110.933333-258.048-247.466667-258.048-136.533333 0-247.466667 115.712-247.466667 258.048 0 112.981333 69.632 208.896 166.570667 244.053333-162.816 40.96-284.672 202.069333-284.672 383.658667L877.226667 972.8C877.226667 791.210667 755.712 630.101333 592.896 589.141333L592.896 589.141333zM592.896 589.141333"></path>
                 </svg>
               </span>
-              <input
-                type="password"
-                for="password"
-                id="password"
-                autocomplete="off"
-                placeholder="密码"
-                v-model="password"
-              >
+              <input type="password" for="password" id="password" autocomplete="off" placeholder="密码" v-model="upwd">
             </div>
             <!-- <div class="h-user1">
               <div class="h-test h-clear" id="h-clear1">
@@ -91,7 +64,7 @@
       </div>
       <div class="h-foot">
         <p class="h-inter">
-          <a href="" target="_blank" >联系我们</a>
+          <a href="" target="_blank">联系我们</a>
           <a href="./teacherStyle/teacherStyle.html" target="_blank">名师风采</a>
         </p>
         <p>Copyright 2017 联想有限公司(北京) 京ICP备11035381 | 京公网安备110108007970号</p>
@@ -103,47 +76,45 @@
 <script>
 export default {
   name: "login",
-  data: function() {
+  data: function () {
     return {
-      loginName: "",
-      password: ""
+      uname: '',
+      upwd: ''
     };
   },
   methods: {
-    login: function () {
-      var app = this;
-      // this.$http是ajax请求对象
-      //this.$http.get/post ("请求的地址",{请求的数据},then("ajax请求成功之后返回的数据res"))
-      this.$http.post("/permit/login",{
-        loginName: this.loginName,
-        password: this.password,
-        validCode: "123456" //写死的验证码
-      }).then(function (res) {
-          console.log(res);
-          if (res.data == "success") {
-            // alert("登录成功");
-            // 如果一个ajax请求在另一个ajax请求的回调函数中，不能使用this，应该提前保存到变量
-            app.$http.get("/permit/user/currentUser").then(function (res) {
-              console.log(res.data.id);
-              console.log(res.data.password);
-              // 将用户id和用户名保存到本地存储
-              window.localStorage.setItem("userId",res.data.id);
-              window.localStorage.setItem("userName",res.data.userName);
-              app.$http.get("/permit/user/currentUserRoleFlag").then(function (res) {
-                if (res.data[0] == "S") {
-                  // 跳转到学生端页面
-                  app.$router.push("/student/Major");
-                }else{
-                  // 跳转到教师端页面
-                  app.$router.push("/teacher/MyMajor")
-                }
-              })
+    login () {
+      this.$http.post('/permit/login', {
+        loginName: this.uname,
+        password: this.upwd,
+        validCode: "123456"
+      }).then((response) => {
+        // 如果返回success
+        // console.log(response)
+        if (response.data == 'success') {
+          this.$http.get('/permit/user/currentUser').then((response)=>{
+            // 将获取到id和username保存到localStorage中
+            window.localStorage.setItem('userId',response.data.id);
+            window.localStorage.setItem('userName',response.data.userName);
+            // 再次请求 根据返回data判断是教师端还是学生端
+            this.$http.get('/permit/user/currentUserRoleFlag').then((response)=>{
+              if(response.data[0] === 'S'){
+                // 跳转学生端页面
+                this.$router.push('/student');
+              }else {
+                // 跳转教师端页面
+                this.$router.push('/teacher');
+              }
             })
-          }else {
-            alert("登录失败")
-          }
+          })
+        }else {
+          this.$message.error('密码错误')
         }
-      )
+
+      }).catch((err) => {
+        console.log(err)
+        console.log('网络错误')
+      })
     }
   }
 };
