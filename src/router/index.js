@@ -23,6 +23,7 @@ import MyJoin from '../components/Students/MyJoin.vue'// 我的参加
 import MyExam from '../components/Students/MyExam.vue'// 我的考试
 import MyDataStudent from '../components/Students/MyDataStudent.vue'// 个人资料
 import MyClass from '../components/Students/MyClass.vue'// 个人资料
+import StartTest from "../components/Students/StartTest.vue"  //开始考试
 Vue.use(VueRouter);
 
 const routes = [
@@ -124,6 +125,12 @@ const routes = [
         path: 'MyDataStudent', 
         component: MyDataStudent,
         name: 'MyDataStudent',
+      },
+      {
+        // 开始考试
+        path: "StartTest",
+        component: StartTest,
+        name: "StartTest"
       }
     ]
   }

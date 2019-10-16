@@ -223,7 +223,6 @@ export default {
       }
     }
   },
-
   created () {
     var app = this;
     this.$http
