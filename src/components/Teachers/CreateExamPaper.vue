@@ -66,7 +66,7 @@
       <!-- 选择题内容输入区 -->
       <el-row v-for="(item,index) in radioList" :key="index">
         <el-col :span="2">
-          <el-radio v-model="radioCorrect" :label="item.tit">
+          <el-radio @change="handleClickRadio" v-model="radioCorrect" :label="item.tit">
             <el-tag type="primary" effect="plain">{{item.tit}}</el-tag>
           </el-radio>
         </el-col>
@@ -105,6 +105,13 @@ export default {
     }
   },
   methods: {
+    // 单选按钮单击，更改对应tag样式功能
+    handleClickRadio (val) {
+      var tags = document.querySelectorAll('.el-radio .el-tag');
+      ['A', 'B', 'C', 'D'].map((item, index) => {
+        val == item ? tags[index].className = 'el-tag el-tag--primary el-tag--dark' : tags[index].className = 'el-tag el-tag--primary el-tag--plain';
+      })
+    },
     // 添加试卷
     pushExamPaper () {
       if (this.examPaperTit === '') {
@@ -128,7 +135,7 @@ export default {
         },
         list: this.examPaperList
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         if (response.status === 200 && typeof response.data === 'string') {
           this.$message({
             message: '试卷保存成功',
@@ -203,7 +210,12 @@ export default {
         this.radioList[3].cont,
         this.minute,
         this.titContent
-      ] = ['','1','','','','','1',''];
+      ] = ['', '1', '', '', '', '', '1', ''];
+      // 消除tag样式
+      var tags = document.querySelectorAll('.el-radio .el-tag');
+      Array.prototype.map.call(tags,(item, index) => {
+        tags[index].className = 'el-tag el-tag--primary el-tag--plain';
+      })
     }
   },
   created () {
@@ -216,6 +228,10 @@ export default {
   line-height: 40px;
   text-align: left;
   margin-top: 10px;
+}
+.CreateExamPaper .el-input--mini .el-input__inner {
+  height: 32px;
+  line-height: 32px;
 }
 .basic_data {
   width: 1200px;
