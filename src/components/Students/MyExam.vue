@@ -42,10 +42,10 @@
               </template>
             </el-table-column>
             <el-table-column label="操作" width="250">
-              <!--  -->
-              <template slot-scope="scope">
-                <!-- <el-button size="mini">缺考</el-button> -->
-                <el-button size="mini" @click="startExam(scope.row)">开始考试</el-button>
+              <!--  slot-scope="scope" -->
+              <template>
+                <el-button size="mini">缺考</el-button>
+                <!-- <el-button size="mini" @click="startExam(scope.row)">开始考试</el-button> -->
                 <!-- <el-button size="mini" @click="lookExam(scope.row)">查看试卷</el-button> -->
               </template>
             </el-table-column>
