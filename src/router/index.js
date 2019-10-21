@@ -14,7 +14,7 @@ import MyContribution from '../components/Teachers/MyContribution.vue' // 我的
 import MyData from '../components/Teachers/MyData.vue' // 个人资料
 import CreateExamPaper from '../components/Teachers/CreateExamPaper.vue' // 创建试卷
 import CreateExam from '../components/Teachers/CreateExam.vue' // 创建考试
-import SeeExam from "../components/Teachers/SeeExam.vue"  //查看试卷
+import SeeExam from '../components/Teachers/SeeExam.vue' // 查看试卷
 
 // ---------------------学生端----------------------
 import Shome from '../components/Students/Home.vue'
@@ -24,7 +24,6 @@ import MyJoin from '../components/Students/MyJoin.vue'// 我的参加
 import MyExam from '../components/Students/MyExam.vue'// 我的考试
 import MyDataStudent from '../components/Students/MyDataStudent.vue'// 个人资料
 import MyClass from '../components/Students/MyClass.vue'// 个人资料
-import StartTest from "../components/Students/StartTest.vue"  //开始考试
 Vue.use(VueRouter);
 
 const routes = [
@@ -35,6 +34,11 @@ const routes = [
   {
     path: '/logined',
     component: Logined
+  },
+  {
+    path: '/SeeExam/:id', // 试卷详请
+    component: SeeExam,
+    name: 'SeeExam',
   },
   {
     path: '/teacher', // 教师端主页面
@@ -85,11 +89,7 @@ const routes = [
         component: CreateExam,
         name: 'CreateExam',
       },
-      {
-        path: "SeeExam",
-        component: SeeExam,
-        name: "SeeExam"
-      }
+      
     ]
   },
   {
@@ -131,12 +131,6 @@ const routes = [
         path: 'MyDataStudent', 
         component: MyDataStudent,
         name: 'MyDataStudent',
-      },
-      {
-        // 开始考试
-        path: "StartTest",
-        component: StartTest,
-        name: "StartTest"
       }
     ]
   }

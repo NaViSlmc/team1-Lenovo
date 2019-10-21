@@ -33,7 +33,7 @@
             </el-table-column>
             <el-table-column label="考试时长" width="250">
               <template slot-scope="scope">
-                <span style="margin-left: 10px">{{ scope.row.duration }}</span>
+                <span style="margin-left: 10px">{{ scope.row.duration }}分钟</span>
               </template>
             </el-table-column>
             <el-table-column label="结束时间" width="250">
@@ -42,10 +42,11 @@
               </template>
             </el-table-column>
             <el-table-column label="操作" width="250">
+              <!--  -->
               <template slot-scope="scope">
-                <el-button size="mini">考试还未开始</el-button>
+                <!-- <el-button size="mini">缺考</el-button> -->
                 <el-button size="mini" @click="startExam(scope.row)">开始考试</el-button>
-                <el-button size="mini" @click="lookExam(scope.row)">查看试卷</el-button>
+                <!-- <el-button size="mini" @click="lookExam(scope.row)">查看试卷</el-button> -->
               </template>
             </el-table-column>
           </el-table>
@@ -99,7 +100,7 @@ export default {
       //   var date1 = new Date(strtime);
       //   //现在时间
         var date2 = new Date();
-        console.log(date2)
+        // console.log(date2)
       //   //判断时间是否过期
       //   return date1 < date2 ? true : false;
       // }
