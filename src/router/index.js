@@ -15,6 +15,7 @@ import MyData from '../components/Teachers/MyData.vue' // 个人资料
 import CreateExamPaper from '../components/Teachers/CreateExamPaper.vue' // 创建试卷
 import CreateExam from '../components/Teachers/CreateExam.vue' // 创建考试
 import SeeExam from '../components/Teachers/SeeExam.vue' // 查看试卷
+import StartTest from "../components/Students/StartTest.vue" //开始考试
 
 // ---------------------学生端----------------------
 import Shome from '../components/Students/Home.vue'
@@ -131,9 +132,15 @@ const routes = [
         path: 'MyDataStudent', 
         component: MyDataStudent,
         name: 'MyDataStudent',
+      },
+      {
+        path: "StartTest/:id",
+        component: StartTest,
+        name: "StartTest"
       }
     ]
   }
+  
 ];
 
 const router = new VueRouter({

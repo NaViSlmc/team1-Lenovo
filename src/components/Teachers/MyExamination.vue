@@ -27,7 +27,7 @@
         <el-tab-pane label="大前端" name="first">
           <el-tag type="success" style="margin-bottom:10px;margin-left:5px;">大前端</el-tag>
 
-          <el-table style="width: 100%" :data="data1" ref="table">
+          <el-table style="width: 100%" :data="data1" ref="table" stripe>
             <el-table-column label="名称" width="250">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.name }}</span>
@@ -350,7 +350,7 @@ export default {
   width: 100%;
   height: 144px;
   background-size: 38%;
-  background: linear-gradient(60deg, #6cc4ce, #65f1ce);
+  background: linear-gradient(60deg, #ce6c9d, #5c5b5b);
 }
 .header-1 {
   width: 1280px;

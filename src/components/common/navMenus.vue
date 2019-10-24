@@ -71,7 +71,7 @@ export default {
         this.$http.get('/permit/logout').then((response) => {
           if (response.data === '') {
             this.$message({
-              message: `${this.userName} 退出成功`,
+              message: `退出成功`,
               type: 'success'
             });
             // 清空localStorage

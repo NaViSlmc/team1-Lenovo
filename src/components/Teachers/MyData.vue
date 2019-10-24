@@ -3,7 +3,7 @@
     <!-- 标题 -->
     <div class="sprotitleBody">
       <div class="sprotitlebackground">
-        <span class="sproinnerspan" style="margin-left: 83px;">个人中心</span>
+        <span class="sproinnerspan" style="margin-left: 83px;font-size: 32px;">{{ userData.userName?userData.userName:'--' }}</span>
       </div>
     </div>
     <!-- 标签页切换 -->
@@ -28,7 +28,7 @@
                   学号
                 </div>
                 <div class="right_msg">
-                  20172205128
+                  20172205130
                 </div>
               </div>
             </div>
@@ -67,7 +67,7 @@
                   职场身份
                 </div>
                 <div class="right_msg">
-                  --
+                  BOSS
                 </div>
               </div>
             </div>
@@ -78,7 +78,7 @@
                   学校
                 </div>
                 <div class="left_msg">
-                  --
+                  BITC
                 </div>
               </div>
               <div class="item_right clearFloat">
@@ -140,7 +140,7 @@
                   家庭电话
                 </div>
                 <div class="right_msg">
-                  --
+                  22222222
                 </div>
               </div>
             </div>
