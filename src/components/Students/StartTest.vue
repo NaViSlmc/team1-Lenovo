@@ -90,7 +90,7 @@ export default {
     return {
       userName: "", // 用户名
       examId: "", // 试卷id
-      intervalTime: "",
+      intervalTime: "", //考试结束时间
       examData: null, // 请求到的试卷属性
       examList: [], // 试卷题目
       timer: 0, // 定时器id
@@ -99,14 +99,6 @@ export default {
     };
   },
   computed: {
-    // 该试卷总分计算
-    examPaperTotalScore() {
-      var num = 0;
-      this.examList.map(item => {
-        num += item.score;
-      });
-      return num;
-    },
     // 对题目选项进行处理
     examSelect() {
       return obj => {
@@ -145,8 +137,31 @@ export default {
     },
     // 提交
     pushExam() {
-      this.$http.post("business/examResult/submit").then(function(res) {
-        console.log(res);
+      //提交试卷时按内容处理
+      var app = this;
+      this.pushExamList = [];
+      this.examList.map((item) => {
+        this.pushExamList.push({
+          answer: item.answer,
+          questionId: item.id
+        })
+      })
+      this.$http.post("business/examResult/submit", {
+        examResult: {
+          planId: this.examId
+        },
+        List: this.pushExamList
+      }).then(function(res) {
+        // console.log(res);
+        // if(res.data == "") {
+        //   this.$message({
+        //     type: "success",
+        //     message: "提交成功"
+        //   })
+        // }
+        app.$http.get(`/business/examPlan/paperDetailAfterCrrect?id=` + app.examId).then (res => {
+          console.log(res);
+        })
       });
     },
     // 倒计时
