@@ -8,7 +8,7 @@
           <div class="top1-left">
             <div class="top1-left-1" v-if="userType=='s'">
               <i class="el-icon-user-solid"></i>
-              姓名
+              {{ userName }}
             </div>
             <div class="top1-left-2">试卷名称：{{examData.name}}</div>
           </div>
@@ -19,13 +19,16 @@
         </div>
         <!-- 分数 -->
         <div class="top2">
-          <b>总分:{{ examPaperTotalScore }}</b>
+          <b v-if="isMiss=='0'">总分:{{ examPaperTotalScore }}</b>
+          <b v-else>缺考</b>
+
         </div>
         <!-- 退出 -->
         <div class="top3">
           <el-button @click="goTopPaper" title="返回上一页">x</el-button>
         </div>
       </el-header>
+
       <el-main>
         <div class="main">
           <div class="danxuan">
@@ -36,8 +39,8 @@
             </p>
             <!-- <span class="danxuan1">
               <b>一、</b>
-              单选题 -->
-              <!-- <i>(20分，每题2分)</i> -->
+            单选题-->
+            <!-- <i>(20分，每题2分)</i> -->
             <!-- </span> -->
           </div>
 
@@ -48,27 +51,28 @@
                 <div class="dx_l_l">
                   <!-- <i class="el-icon-check" style="color:#4ac0e0;font-weight:bold;font-size:20px;"></i> -->
                   <span style="font-weight:bold;">
-                    <span style="font-size:20px">{{ examListIndex(index) }}</span>/{{ examListCount(examList.length) }}
+                    <span style="font-size:20px">{{ examListIndex(index) }}</span>
+                    /{{ examListCount(examList.length) }}
                   </span>
                 </div>
                 <div class="dx_l_r">
                   <div class="r_top">{{ item.stem }}</div>
-                  <div class="r_bottom" v-if="userType=='s'">已选
-                    <span class='xuanxiangStyle'>A</span>
-                    选项</div>
+                  <div class="r_bottom" v-if="userType=='s'">
+                    已选
+                    <span class="xuanxiangStyle">{{ item.studentAnswer }}</span>
+                    选项
+                  </div>
                 </div>
               </div>
-              <div class="dx_r">
-                <i v-if="userType=='t'">该题分值: {{item.score}}分</i>
-                <i v-else>得分 : 加2分</i>
+              <div class="dx_r" :style="userType=='t'?'background:rgb(121, 187, 255)':'background:#fcd6cb'">
+                <i v-if="userType=='t' || isMiss==1" :style="userType=='t'?'color:#fff':''">该题分值: {{item.score}}分</i>
+                <i v-else style="color:#ff7245">得分 : 加{{ item.score }}分</i>
               </div>
             </div>
             <div class="ti2">
-              
               <el-row v-for="(itemSel,index) in examSelect(item)" :key="index">
                 <el-radio :value="item.answer" :label="itemSel.label">{{ itemSel.content }}</el-radio>
               </el-row>
-
             </div>
             <!-- 正确答案 -->
             <div class="ti3">
@@ -78,58 +82,63 @@
               </span>
             </div>
           </div>
-
         </div>
       </el-main>
     </el-container>
   </div>
 </template>
+
 <script>
 export default {
   name: "SeeExam",
   data () {
     return {
       userType: this.$route.query.userType, // 当前的用户类型 s为学生 t为教师
+      isMiss: this.$route.query.isMiss, // 是否缺考 1为缺考
       examData: null, // 请求到的试卷属性
+      examId: '', // 试卷id
       examList: [], // 试卷题目
+      userName: '', // 用户名
     };
   },
   computed: {
     // 该试卷总分计算
-    examPaperTotalScore() {
+    examPaperTotalScore () {
       var num = 0;
-      this.examList.map((item) => {
+      this.examList.map(item => {
         num += item.score;
-      })
-      return num
+      });
+      return num;
     },
     // 对题目选项进行处理
     examSelect () {
-      return (obj) => {
+      return obj => {
         // 返回一个arr
         var arr = [];
-        ['optionA', 'optionB', 'optionC', 'optionD', 'optionE', 'optionF'].map((item) => {
-          if (obj[item] !== 'string' && obj[item] !== '') {
-            arr.push({
-              label: item.slice(-1),
-              content: obj[item]
-            })
+        ["optionA", "optionB", "optionC", "optionD", "optionE", "optionF"].map(
+          item => {
+            if (obj[item] !== "string" && obj[item] !== "") {
+              arr.push({
+                label: item.slice(-1),
+                content: obj[item]
+              });
+            }
           }
-        });
-        return arr
-      }
+        );
+        return arr;
+      };
     },
     // 总题号
     examListCount () {
-      return (len) => {
-        return len < 10 ? `0${len}` : `${len}`
-      }
+      return len => {
+        return len < 10 ? `0${len}` : `${len}`;
+      };
     },
     // 题目序列号
     examListIndex () {
-      return (val) => {
+      return val => {
         return val + 1 < 10 ? `0${val + 1}` : `${val + 1}`;
-      }
+      };
     }
   },
   methods: {
@@ -139,17 +148,46 @@ export default {
     }
   },
   created () {
+    // 对试卷id进行缓存
+    // 防止刷新后获取不到params  从本地获取
+    var sessionExamId = window.sessionStorage.getItem('examId');
+    if (sessionExamId) {
+      this.examId = window.sessionStorage.getItem('examId');
+    } else {
+      window.sessionStorage.setItem('examId', this.$route.params.id);
+      this.examId = this.$route.params.id;
+    }
     // 请求试卷详细内容
-    this.$http.post(`/business/examQuestionMark/pageDetail?id=${this.$route.params.id}`).then((res) => {
-      this.examData = res.data.examPage;
-      // 对试题进行排序(根据题号)
-      function examListSort (val) {
-        return (a,b)=> {
-          return a[val] - b[val]
+    if (this.userType == 't') {
+      this.$http.post(`/business/examQuestionMark/pageDetail?id=${this.examId}`).then((res) => {
+        this.examData = res.data.examPage;
+        // 对试题进行排序(根据题号)
+        function examListSort (val) {
+          return (a, b) => {
+            return a[val] - b[val]
+          }
         }
-      }
-      this.examList = res.data.list.sort(examListSort('sort'));
-    })
+        this.examList = res.data.list.sort(examListSort('sort'));
+      })
+    } else if (this.userType == 's') {
+      this.$http.get(`/business/examPlan/examStart?id=${this.examId}`).then((res) => {
+        this.examData = res.data.examPage;
+        // 对试题进行排序(根据题号)
+        function examListSort (val) {
+          return (a, b) => {
+            return a[val] - b[val]
+          }
+        }
+        this.examList = res.data.list.sort(examListSort('sort'));
+      })
+    }
+    this.userName = window.localStorage.getItem("userName");
+  },
+    // 离开该路由时候 清空所需要清空的东西
+  beforeRouteLeave (to, from, next) {
+    window.sessionStorage.removeItem('examId');
+    window.sessionStorage.removeItem('examTime');
+    next();
   }
 };
 </script>
@@ -164,14 +202,15 @@ export default {
   color: #606060;
 }
 .SeeExam .el-radio__label {
-  display:inline-block;
+  display: inline-block;
   white-space: pre-line;
-  box-sizing:border-box;
+  box-sizing: border-box;
   width: 780px;
 }
 .SeeExam .el-header {
   text-align: left;
   line-height: 32px;
+  overflow: hidden;
 }
 .SeeExam .xuanxiangStyle {
   color: #4ac1e1;
@@ -265,7 +304,7 @@ export default {
   /* line-height: 80px; */
   /* vertical-align: middle; */
   position: relative;
-  top:50%;
+  top: 50%;
   margin-top: -16px;
 }
 .SeeExam .top1-center {
@@ -275,6 +314,7 @@ export default {
   line-height: 80px;
   text-align: center;
   color: #989898;
+  margin-left: 100px;
 }
 .SeeExam .top1-right {
   height: 100%;
@@ -285,7 +325,6 @@ export default {
   color: #989898;
   margin-right: 2px;
 }
-
 .SeeExam .top2 {
   height: 100%;
   width: 10%;
@@ -299,7 +338,7 @@ export default {
 .SeeExam .top3 {
   height: 100%;
   width: 10%;
-  float: left;
+  float: right;
   margin: 0 0 auto;
   line-height: 80px;
 }
@@ -323,8 +362,5 @@ export default {
 }
 .SeeExam .danxuan .danxuan1 {
   font-size: 16px;
-}
-.SeeExam .danxuan1 i {
-  font-size: 10px;
 }
 </style>
