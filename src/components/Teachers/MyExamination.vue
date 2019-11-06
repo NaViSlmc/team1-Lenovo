@@ -3,7 +3,7 @@
     <!-- 头部 -->
     <div class="header">
       <div class="header-1">
-        <div class="header-2" style="margin-left:30px">
+        <div class="header-2">
           <p>考试管理</p>
           <span>贴合知识点 自动判卷 多维度统计</span>
         </div>
@@ -28,13 +28,13 @@
           <el-tag type="success" style="margin-bottom:10px;margin-left:5px;">大前端</el-tag>
 
           <el-table style="width: 100%" :data="data1" ref="table" stripe>
-            <el-table-column label="名称" width="250">
+            <el-table-column label="名称" width="230">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.name }}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="创建时间" width="250">
+            <el-table-column label="创建时间" width="180">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.createTime }}</span>
               </template>
@@ -52,7 +52,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="200">
               <template slot-scope="scope">
                 <el-button size="mini" @click="handleEdit(scope.row)">查看试卷</el-button>
                 <el-button
@@ -80,13 +80,13 @@
           <el-tag type="success" style="margin-bottom:10px;margin-left:5px;">移动互联</el-tag>
 
           <el-table style="width: 100%" :data="data2" ref="table">
-            <el-table-column label="名称" width="250">
+            <el-table-column label="名称" width="230">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.name }}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="创建时间" width="250">
+            <el-table-column label="创建时间" width="200">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.createTime }}</span>
               </template>
@@ -98,13 +98,13 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="试卷类型" width="250">
+            <el-table-column label="试卷类型" width="180">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.typeName }}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="200">
               <template slot-scope="scope">
                 <el-button size="mini" @click="handleEdit(scope.row)">查看试卷</el-button>
                 <el-button
@@ -132,13 +132,13 @@
           <el-tag type="success" style="margin-bottom:10px;margin-left:5px;">软件开发</el-tag>
 
           <el-table style="width: 100%" :data="data3" ref="table">
-            <el-table-column label="名称" width="250">
+            <el-table-column label="名称" width="230">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.name }}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="创建时间" width="250">
+            <el-table-column label="创建时间" width="200">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.createTime }}</span>
               </template>
@@ -150,13 +150,13 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="试卷类型" width="250">
+            <el-table-column label="试卷类型" width="180">
               <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.typeName }}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="200">
               <template slot-scope="scope">
                 <el-button size="mini" @click="handleEdit(scope.row)">查看试卷</el-button>
                 <el-button
@@ -342,6 +342,9 @@ export default {
 };
 </script>
 <style>
+.el-tabs--border-card>.el-tabs__content {
+  box-sizing: border-box;
+}
 .el-table td,
 .el-table th.is-leaf {
   text-align: center;
@@ -353,14 +356,13 @@ export default {
   background: linear-gradient(60deg, #ce6c9d, #5c5b5b);
 }
 .header-1 {
-  width: 1280px;
-  /* margin: 0 auto; */
-  margin-left: 200px;
+  width: 100%;
   overflow: hidden;
 }
 .header-2 {
   width: 548px;
   float: left;
+  margin-left: 230px;
 }
 .header-2 p {
   font-size: 26px;
@@ -384,9 +386,10 @@ export default {
   margin: 0 auto;
   /* background: bisque; */
   /* width:100%; */
-  height: 500px;
+  /* height: 500px; */
   width: 90%;
   margin-top: 10px;
+  min-height: 550px;
 }
 .cell {
   font-size: 13px;

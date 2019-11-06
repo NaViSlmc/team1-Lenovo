@@ -44,10 +44,10 @@
         <el-col :span="1">
           <el-input-number size="mini" style="height:32px" :min="1" controls-position="right" v-model="minute"></el-input-number>
         </el-col>
-        <el-col :span="2" :offset="4">
+        <el-col :span="2" :offset="3">
           <el-tag>是否为面试题</el-tag>
         </el-col>
-        <el-col :span="1">
+        <el-col :span="1" :offset="1">
           <el-radio v-model="isInterview" label="1">是</el-radio>
         </el-col>
         <el-col :span="1">

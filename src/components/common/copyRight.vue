@@ -35,6 +35,7 @@ export default {
   width: 100%;
   background: url(../../images/ditu.jpg) no-repeat;
   background-size: 100%;
+   background-position: 0 5px;
   padding-top: 30px;
   margin-top: 30px;
   bottom: 0;
