@@ -68,12 +68,11 @@
         </el-col>
       </el-row>
 
-      <el-table ref="multipleTable" @current-change="handleCurrentChange" highlight-current-row tooltip-effect="dark" style="width: 100%" :data="data1" v-if="data1">
-        <!-- <el-table-column type="selection" width="55"></el-table-column> -->
+      <el-table ref="multipleTable" @current-change="handleCurrentChange" highlight-current-row tooltip-effect="light" style="width: 100%" :data="data1" v-if="data1">
         <el-table-column label="试卷" width="300" prop="name"></el-table-column>
-        <el-table-column prop="typeName" label="专业分类" width="120"></el-table-column>
-        <el-table-column prop="remark" label="备注信息" width="425"></el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="300"></el-table-column>
+        <el-table-column label="专业分类" prop="typeName" width="120"></el-table-column>
+        <el-table-column label="备注信息" prop="remark" width="425"></el-table-column>
+        <el-table-column label="创建时间" prop="createTime" width="300"></el-table-column>
       </el-table>
       <el-row>
         <el-col>
@@ -170,13 +169,13 @@ export default {
       // 时间格式处理
       var startTime = new Date(this.dateValue).getTime();
       this.$http.post('/business/examPlan/save',{
-        classId: this.optionsDataDefault,
-        duration: this.examTime+'',
-        examPageId: this.selectedExamId,
-        isMultipleSubmission: 'N',
-        name: this.examName,
-        startTime,
-        typeId: this.examType
+        classId: this.optionsDataDefault,//考试班级id
+        duration: this.examTime+'',//考试时长
+        examPageId: this.selectedExamId,//关联试卷id
+        isMultipleSubmission: 'N',//是否可以刷题
+        name: this.examName, //考试名称
+        startTime, //考试开始时间
+        typeId: this.examType //考试类型
       }).then((res) => {
         if(res.data === '') {
           this.$message({
@@ -212,29 +211,27 @@ export default {
     }
   },
   created () {
-    this.userId = window.localStorage.getItem('userId')
+    this.userId = window.localStorage.getItem('userId') //一
     var app = this;
-    // 获取试卷集合
-    this.$http
-      .post("/exam/examPage/page", {
+    // 获取试卷集合    二
+    this.$http.post("/exam/examPage/page", {
         page: this.page, //  当前页
         pageSize: this.pageSize, //每一页显示条数
         params: {
           typeId: null //typeId 试卷类型id 默认传nulll 获取所有的
         }
-      })
-      .then(function (res) {
-        app.data1 = res.data.data;
-        app.recordsTotal = res.data.recordsTotal;
+      }).then(function (res) {
+        app.data1 = res.data.data; //所有试卷数据
+        app.recordsTotal = res.data.recordsTotal;  //总条目数
       });
 
 
 
-    // 获取考试类型
+    // 获取考试类型   三
     this.$http.get('/business/examType/listAll').then((res) => {
-      this.examTypeList = res.data;
+      this.examTypeList = res.data; 
     });
-    // 获取老师带过的班级
+    // 获取老师带过的班级  四
     this.$http.get('/business/organClassUser/currentClassListByTeacherId/' + this.userId).then((res) => {
       this.optionsData = res.data;
     });
