@@ -212,7 +212,7 @@ export default {
         }
       })
     },
-    // 删除试卷功能  巨麻烦的功能。。。
+    // 删除试卷功能
     handleDelete(index, item, tableData, page) {
       // index为当前组件在当前页的下标  // item为该组件内容
       // 查看试卷是否被关联
@@ -390,6 +390,9 @@ export default {
   width: 90%;
   margin-top: 10px;
   min-height: 550px;
+}
+.main .el-tabs__nav {
+    margin-left: 0px;
 }
 .cell {
   font-size: 13px;

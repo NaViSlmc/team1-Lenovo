@@ -3,7 +3,7 @@
     <!-- 标题 -->
     <div class="sprotitleBody">
       <div class="sprotitlebackground">
-        <span class="sproinnerspan" style="margin-left: 83px;font-size: 32px;">{{ userData.userName?userData.userName:'--' }}</span>
+        <span class="sproinnerspan" style="margin-left: 83px;font-size: 32px;">讲师</span>
       </div>
     </div>
     <!-- 标签页切换 -->

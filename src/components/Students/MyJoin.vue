@@ -32,14 +32,6 @@
               </template>
             </el-table-column>
           </el-table>
-
-          <el-pagination
-            background
-            layout="prev, pager, next"
-            :page-size="+pageSize"
-            :total="totalPages"
-            @current-change="currentChange"
-          ></el-pagination>
         </el-tab-pane>
         <el-tab-pane label="我的反馈" name="feedback" v-if="isShow == true">
           <span id="FB">我的意见反馈</span>
@@ -68,7 +60,12 @@
         <el-tab-pane label="提交反馈" name="feedback" v-else>
           <span id="BF">意见反馈</span>
           <el-button style="float: right;margin-right: 140px" @click="newFB">我的意见</el-button>
-          <el-form style="margin-top: 30px;width: 1050px" label-position="right" label-width="80px" :model="formLabelAlign">
+          <el-form
+            style="margin-top: 30px;width: 1050px"
+            label-position="right"
+            label-width="80px"
+            :model="formLabelAlign"
+          >
             <el-form-item label="问题分类">
               <el-select v-model="formLabelAlign.type">
                 <el-option value="产品bug"></el-option>
@@ -142,7 +139,7 @@ export default {
           })
           .then(res => {
             // console.log(res);
-            console.log(this.obj);
+            // console.log(this.obj);
             this.dataTable = res.data.data;
             this.recordsTotal = res.data.recordsTotal;
           });
@@ -282,6 +279,9 @@ export default {
   margin-left: 210px;
   /* background: cadetblue; */
   margin-top: 30px;
+}
+.MyJoin_main .el-tabs__nav {
+  margin-left: 0px;
 }
 #QA {
   border-left: 4px solid #014743;
